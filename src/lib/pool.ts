@@ -5,7 +5,23 @@ import { getUsdc } from '@/onchain-facts'
 export const CHAIN_ID = arcTestnet.id
 
 export const POOL_ADDRESS = import.meta.env.VITE_ARCLEND_ADDRESS as Address
-export const DEPLOY_BLOCK = BigInt(import.meta.env.VITE_ARCLEND_DEPLOY_BLOCK)
+
+function parseBlock(value: string | undefined): bigint {
+  return value && /^\d+$/.test(value) ? BigInt(value) : 0n
+}
+export const DEPLOY_BLOCK = parseBlock(import.meta.env.VITE_ARCLEND_DEPLOY_BLOCK)
+
+/** Names of required public settings that are missing, so the app can explain itself instead of showing a blank page. */
+export const MISSING_CONFIG = (
+  [
+    ['VITE_ARCLEND_ADDRESS', import.meta.env.VITE_ARCLEND_ADDRESS],
+    ['VITE_ARCLEND_DEPLOY_BLOCK', import.meta.env.VITE_ARCLEND_DEPLOY_BLOCK],
+    ['VITE_EURC_ADDRESS', import.meta.env.VITE_EURC_ADDRESS],
+    ['VITE_CIRBTC_ADDRESS', import.meta.env.VITE_CIRBTC_ADDRESS],
+  ] as const
+)
+  .filter(([, value]) => !value)
+  .map(([name]) => name)
 
 const usdc = getUsdc(CHAIN_ID)
 if (!usdc) throw new Error('USDC is not registered for Arc Testnet')

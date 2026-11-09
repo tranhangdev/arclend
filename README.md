@@ -121,7 +121,7 @@ VITE_EURC_ADDRESS=0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a
 VITE_CIRBTC_ADDRESS=0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF
 ```
 
-If you deploy your own copy of the contract, update the first two values.
+`.env.production` in this repo already holds these public values, so hosts such as Vercel build with them automatically. If you deploy your own copy of the contract, update the values there and in your local `.env`.
 
 ## Project structure
 
